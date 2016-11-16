@@ -4,7 +4,6 @@ import bdd.Furgent;
 import bdd.FurgentDAO;
 import bkgpi2a.Company;
 import bkgpi2a.Identifiants;
-import bkgpi2a.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
@@ -14,7 +13,10 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.result.UpdateResult;
 import java.io.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.bson.Document;
@@ -29,7 +31,7 @@ import utils.Md5;
  * d'une base de données MongoDB par rapport à une base de données Informix
  *
  * @author Thierry Baribaud.
- * @version Octobre 2016
+ * @version 0.02
  */
 public class SyncCollections {
 
@@ -119,10 +121,10 @@ public class SyncCollections {
 //        System.out.println(getInformixDbId());
 
         System.out.println("Ouverture de la connexion au serveur MongoDb : " + mongoServer.getName());
-        mongoClient = new MongoClient(mongoServer.getIpAddress(), (int) mongoServer.getPortNumber());
+//        mongoClient = new MongoClient(mongoServer.getIpAddress(), (int) mongoServer.getPortNumber());
 
         System.out.println("Connexion à la base de données : " + mongoServer.getDbName());
-        mongoDatabase = mongoClient.getDatabase(mongoServer.getDbName());
+//        mongoDatabase = mongoClient.getDatabase(mongoServer.getDbName());
 
         System.out.println("Ouverture de la connexion au serveur Informix : " + informixServer.getName());
         informixDbManager = new DBManager(informixServer);
@@ -131,11 +133,52 @@ public class SyncCollections {
         informixConnection = informixDbManager.getConnection();
 
         System.out.println("Synchronisation des sociétés ...");
-        syncCompanies(mongoDatabase, informixConnection);
+//        syncCompanies(mongoDatabase, informixConnection);
+
+        System.out.println("Synchronisation des sociétés ...");
+        splTester(informixConnection);
     }
 
     /**
-     *
+     * Méthode pour tester l'utilisation de procédures stockées depuis Java
+     * @param informixConnection connexion  à la base de données Informix
+     */
+    public void splTester(Connection informixConnection) {
+        PreparedStatement preparedStatement;
+        ResultSet resultSet;
+        Timestamp timestamp;
+        
+        timestamp = new Timestamp(System.currentTimeMillis());
+        System.out.println("timestamp:" + timestamp);
+        try {
+//            preparedStatement = informixConnection.prepareStatement("{call addMessage(?, ?, ?)}");
+//            preparedStatement.setInt(1, 4828941);
+//            preparedStatement.setString(2, "Les sanglots longs Des violons De l'automne Blessent mon coeur D'une langueur Monotone. Tout suffocant Et blême, quand Sonne l'heure, Je me souviens Des jours anciens Et je pleure Et je m'en vais Au vent mauvais Qui m'emporte Deçà, delà, Pareil à la Feuille morte.");
+//            preparedStatement.setTimestamp(3, timestamp);
+//            resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()) {
+//                System.out.println("retcode:" + resultSet.getInt(1));
+//            }
+//            resultSet.close();
+//            preparedStatement.close();
+            preparedStatement = informixConnection.prepareStatement("{call findCall(?, ?)}");
+            preparedStatement.setString(1, "49");
+            preparedStatement.setInt(2, 635);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                System.out.println("retcode:" + resultSet.getInt(1) + 
+                        ", table:" + resultSet.getInt(2) + 
+                        ", cnum:" + resultSet.getInt(3));
+            }
+            resultSet.close();
+            preparedStatement.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(SyncCollections.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    /**
+     * Méthode pour synchroniser les clients par rapport à la base de données Informix.
      */
     private void syncCompanies(MongoDatabase mongoDatabase, Connection informixConnection) {
         Furgent emergencyService;
