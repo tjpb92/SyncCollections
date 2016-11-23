@@ -151,27 +151,29 @@ public class SyncCollections {
         timestamp = new Timestamp(System.currentTimeMillis());
         System.out.println("timestamp:" + timestamp);
         try {
-//            preparedStatement = informixConnection.prepareStatement("{call addMessage(?, ?, ?)}");
-//            preparedStatement.setInt(1, 4828941);
-//            preparedStatement.setString(2, "Les sanglots longs Des violons De l'automne Blessent mon coeur D'une langueur Monotone. Tout suffocant Et blême, quand Sonne l'heure, Je me souviens Des jours anciens Et je pleure Et je m'en vais Au vent mauvais Qui m'emporte Deçà, delà, Pareil à la Feuille morte.");
-//            preparedStatement.setTimestamp(3, timestamp);
-//            resultSet = preparedStatement.executeQuery();
-//            while (resultSet.next()) {
-//                System.out.println("retcode:" + resultSet.getInt(1));
-//            }
-//            resultSet.close();
-//            preparedStatement.close();
-            preparedStatement = informixConnection.prepareStatement("{call findCall(?, ?)}");
-            preparedStatement.setString(1, "49");
-            preparedStatement.setInt(2, 635);
+            preparedStatement = informixConnection.prepareStatement("{call addMessage(?, ?, ?)}");
+            preparedStatement.setInt(1, 4956554);
+            preparedStatement.setString(2, "Maître Corbeau, sur un arbre perché, Tenait en son bec un fromage. Maître Renard, par l'odeur alléché, Lui tint à peu près ce langage : 'Hé ! bonjour, Monsieur du Corbeau. Que vous êtes joli ! que vous me semblez beau ! Sans mentir, si votre ramage Se rapporte à votre plumage, Vous êtes le Phénix des hôtes de ces bois.' A ces mots le Corbeau ne se sent pas de joie ; Et pour montrer sa belle voix, Il ouvre un large bec, laisse tomber sa proie. Le Renard s'en saisit, et dit : 'Mon bon Monsieur, Apprenez que tout flatteur Vit aux dépens de celui qui l'écoute : Cette leçon vaut bien un fromage, sans doute. Le Corbeau, honteux et confus, Jura, mais un peu tard, qu'on ne l'y prendrait plus.");
+            preparedStatement.setTimestamp(3, timestamp);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                System.out.println("retcode:" + resultSet.getInt(1) + 
-                        ", table:" + resultSet.getInt(2) + 
-                        ", cnum:" + resultSet.getInt(3));
+                System.out.println("retcode:" + resultSet.getInt(1));
+                System.out.println("nbtrials:" + resultSet.getInt(2));
             }
             resultSet.close();
             preparedStatement.close();
+            
+//            preparedStatement = informixConnection.prepareStatement("{call findCall(?, ?)}");
+//            preparedStatement.setString(1, "49");
+//            preparedStatement.setInt(2, 635);
+//            resultSet = preparedStatement.executeQuery();
+//            while (resultSet.next()) {
+//                System.out.println("retcode:" + resultSet.getInt(1) + 
+//                        ", table:" + resultSet.getInt(2) + 
+//                        ", cnum:" + resultSet.getInt(3));
+//            }
+//            resultSet.close();
+//            preparedStatement.close();
         } catch (SQLException ex) {
             Logger.getLogger(SyncCollections.class.getName()).log(Level.SEVERE, null, ex);
         }
