@@ -1,29 +1,29 @@
 # SyncCollections
-Programme Java permettant de synchroniser les collections d'une base de données MongoDB par rapport à une base de données Informix
+Programme Java permettant de synchroniser les collections d'une base de donnÃ©es MongoDB par rapport Ã  une base de donnÃ©es Informix
 
-##Utilisation:
+## Utilisation:
 ```
 java SyncCollections [-mgodb mongodb] [-ifxdb informixdb] [-d] [-t] 
 ```
-où :
-* ```-mgodb mongodb``` est la référence à la base de données MongoDB, par défaut désigne la base de données de pré-production. Voir fichier *MyDatabases.prop* (optionnel).
-* ```-ifxdb informixdb``` est la référence à la base de données Informix, par défaut désigne la base de données de pré-production. Voir fichier *MyDatabases.prop* (optionnel).
-* ```-d``` le programme s'exécute en mode débug, il est beaucoup plus verbeux. Désactivé par défaut (paramètre optionnel).
-* ```-t``` le programme s'exécute en mode test, les transcations en base de données ne sont pas faites. Désactivé par défaut (paramètre optionnel).
+oÃ¹ :
+* ```-mgodb mongodb``` est la rÃ©fÃ©rence Ã  la base de donnÃ©es MongoDB, par dÃ©faut dÃ©signe la base de donnÃ©es de prÃ©-production. Voir fichier *MyDatabases.prop* (optionnel).
+* ```-ifxdb informixdb``` est la rÃ©fÃ©rence Ã  la base de donnÃ©es Informix, par dÃ©faut dÃ©signe la base de donnÃ©es de prÃ©-production. Voir fichier *MyDatabases.prop* (optionnel).
+* ```-d``` le programme s'exÃ©cute en mode dÃ©bug, il est beaucoup plus verbeux. DÃ©sactivÃ© par dÃ©faut (paramÃ¨tre optionnel).
+* ```-t``` le programme s'exÃ©cute en mode test, les transcations en base de donnÃ©es ne sont pas faites. DÃ©sactivÃ© par dÃ©faut (paramÃ¨tre optionnel).
 
-##Pré-requis :
-- Java 6 ou supérieur.
+## PrÃ©-requis :
+- Java 6 ou supï¿½rieur.
 - JDBC Informix
 - JDBC MySql
 - Driver MongoDB
 - Librairie Jackson
 
-##Fichier des paramètres : 
+## Fichier des paramÃ¨tres : 
 
-Ce fichier permet de spécifier les paramètres d'accès aux différentes bases de données.
+Ce fichier permet de spÃ©cifier les paramÃ¨tres d'accÃ¨s aux diffÃ©rentes bases de donnÃ©es.
 
-A adapter selon les implémentations locales.
+A adapter selon les implÃ©mentations locales.
 
-Ce fichier est nommé : *MyDatabases.prop*.
+Ce fichier est nommÃ© : *MyDatabases.prop*.
 
-Le fichier *MyDatabases_Example.prop* est fourni à titre d'exemple.
+Le fichier *MyDatabases_Example.prop* est fourni Ã  titre d'exemple.
